@@ -180,6 +180,6 @@ pytest tests/
 | ลำดับ | รหัสนิสิต | ชื่อ - นามสกุล | บทบาทและส่วนงานที่รับผิดชอบ |
 | :---: | :---: | :----- | :--- |
 | 1 | `67011216002` | [พรพรรณ นันตะเวช]   | **Data Cleaning &amp; Inspection:** สำรวจและตรวจสอบคุณภาพข้อมูลดิบ 7 ไฟล์, สกัดหลักฐานปัญหา และทำความสะอาดข้อมูลพร้อมคัดแยกข้อมูลกำกวมลง `review_needed.csv` |
-| 2 | `67011216004` | [นิตยา บุตรดีขันธ์]   | **Data Pipeline & Cleaning:** สคริปต์ทำความสะอาดข้อมูล `data/cleaned/`, ตรวจสอบ Data Quality และคัดแยก `review_needed.csv` |
-| 3 | `67011216001` | [ณัฐรีญา ศรีดาวงษ์]   | **Core Logic & UI Development:** พัฒนา `src/risk.py`, `src/storage.py` และหน้าจอ Gradio Dashboard (`src/app.py`) |
-| 4 | `67011216014` | [กัญญาณัฐ สีแสงน้อย]   | **Testing & Documentation:** ออกแบบและรัน 5 Test Cases (`tests/`), จัดทำ `AI_USE.md` และเตรียม Demo Presentation |
+| 2 | `67011216004` | [นิตยา บุตรดีขันธ์]   | **Synthetic Data &amp; Risk Calculation:** สร้างข้อมูลสังเคราะห์ `supplier_lead_time.csv` พร้อมฝังเคสทดสอบ, รวมข้อมูลจากหลายแหล่ง (Data Join) และเขียนเอนจินคำนวณความเสี่ยงขาดสต็อก |
+| 3 | `67011216001` | [ณัฐรีญา ศรีดาวงษ์]   | **GitHub &amp; UI Prototype Development:** จัดการโครงสร้างโปรเจกต์บน GitHub Repository, พัฒนาระบบบันทึกตั๋วสั่งซื้อ (Storage Engine) และหน้าจอ Gradio Dashboard UI |
+| 4 | `67011216014` | [กัญญาณัฐ สีแสงน้อย]   | **System Testing &amp; Project Documentation:** ออกแบบและรันการทดสอบระบบครบ 5 Test Cases, รวบรวมข้อมูล จัดทำเอกสารสรุปโปรเจกต์ (`README.md`, `AI_USE.md`) และสไลด์นำเสนอ |
