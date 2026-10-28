@@ -179,7 +179,7 @@ pytest tests/
 
 | ลำดับ | รหัสนิสิต | ชื่อ - นามสกุล | บทบาทและส่วนงานที่รับผิดชอบ |
 | :---: | :---: | :----- | :--- |
-| 1 | `67011216002` | [พรพรรณ นันตะเวช]   | **Team Lead & System Architecture:** ออกแบบโครงสร้างระบบ, GitHub Repository, `README.md` และ API Boundary |
+| 1 | `67011216002` | [พรพรรณ นันตะเวช]   | **Data Cleaning &amp; Inspection:** สำรวจและตรวจสอบคุณภาพข้อมูลดิบ 7 ไฟล์, สกัดหลักฐานปัญหา และทำความสะอาดข้อมูลพร้อมคัดแยกข้อมูลกำกวมลง `review_needed.csv` |
 | 2 | `67011216004` | [นิตยา บุตรดีขันธ์]   | **Data Pipeline & Cleaning:** สคริปต์ทำความสะอาดข้อมูล `data/cleaned/`, ตรวจสอบ Data Quality และคัดแยก `review_needed.csv` |
 | 3 | `67011216001` | [ณัฐรีญา ศรีดาวงษ์]   | **Core Logic & UI Development:** พัฒนา `src/risk.py`, `src/storage.py` และหน้าจอ Gradio Dashboard (`src/app.py`) |
 | 4 | `67011216014` | [กัญญาณัฐ สีแสงน้อย]   | **Testing & Documentation:** ออกแบบและรัน 5 Test Cases (`tests/`), จัดทำ `AI_USE.md` และเตรียม Demo Presentation |
