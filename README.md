@@ -178,7 +178,7 @@ pytest tests/
 ## 👥 10. สมาชิกในทีมและบทบาทหน้าที่ (Team Members & Roles)
 
 | ลำดับ | รหัสนิสิต | ชื่อ - นามสกุล | บทบาทและส่วนงานที่รับผิดชอบ |
-| :---: | :---: | :--- | :--- |
+| :---: | :---: | :----- | :--- |
 | 1 | `67011216001` | ณัฐรีญา ศรีดาวงษ์   | **Team Lead & System Architecture:** ออกแบบโครงสร้างระบบ, GitHub Repository, `README.md` และ API Boundary |
 | 2 | `67011216002` | พรพรรณ นันตะเวช   | **Data Pipeline & Cleaning:** สคริปต์ทำความสะอาดข้อมูล `data/cleaned/`, ตรวจสอบ Data Quality และคัดแยก `review_needed.csv` |
 | 3 | `67011216004` | นิตยา บุตรดีขันธ์   | **Core Logic & UI Development:** พัฒนา `src/risk.py`, `src/storage.py` และหน้าจอ Gradio Dashboard (`src/app.py`) |
