@@ -188,9 +188,4 @@ pytest tests/
 | **4** | `67011216014` | กัญญาณัฐ สีแสงน้อย | **System Testing & Project Documentation:**<br>• ออกแบบและรันการทดสอบระบบครบ 5 Test Cases<br>• รวบรวมข้อมูล จัดทำเอกสารสรุปโปรเจกต์ (`README.md`, `AI_USE.md`, `TEST_CASES.md`) และสไลด์นำเสนอ |
 
 ---
-
-## 🏷️ 11. GitHub Tag & Final Checklist ก่อนส่งงาน
-
-* [x] **Git Tag / Release:** สร้าง Tag ชื่อ `v1.0-final` บน GitHub
-* [x] **Secrets Screening:** ตรวจสอบว่าไม่มี API Keys, Passwords, `.env`, หรือ Virtual Environments ติดขึ้น Repository
-* [x] **File Separation:** แยกไฟล์ `TEST_CASES.md` และ `AI_USE.md` ออกจาก README เพื่อโครงสร้างโปรเจกต์ที่สะอาดตรงตามมาตรฐาน
+🔗 ลิงก์สำหรับทดสอบระบบ (Quick Links)
