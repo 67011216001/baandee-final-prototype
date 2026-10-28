@@ -1,0 +1,83 @@
+product_id,supplier_id,supplier_name,lead_time_days,minimum_order_qty,last_updated
+1,SUP-001,"Siam Living Craft Co., Ltd.",14.0,100,2026-07-20
+2,SUP-001,"Siam Living Craft Co., Ltd.",21.0,20,2026-07-20
+3,SUP-003,Thai Decor & Furniture Group,7.0,10,2026-07-20
+4,SUP-002,BaanDee Quality Supply Partnership,7.0,50,2026-07-20
+5,SUP-002,BaanDee Quality Supply Partnership,21.0,50,2026-07-20
+6,SUP-002,BaanDee Quality Supply Partnership,7.0,100,2026-07-20
+7,SUP-001,"Siam Living Craft Co., Ltd.",28.0,10,2026-07-20
+8,SUP-001,"Siam Living Craft Co., Ltd.",7.0,10,2026-07-20
+9,SUP-004,Bangkok Kitchenware Trading,14.0,20,2026-07-20
+10,SUP-001,"Siam Living Craft Co., Ltd.",14.0,10,2026-07-20
+11,SUP-001,"Siam Living Craft Co., Ltd.",21.0,10,2026-07-20
+12,SUP-001,"Siam Living Craft Co., Ltd.",14.0,20,2026-07-20
+13,SUP-002,BaanDee Quality Supply Partnership,14.0,50,2026-07-20
+14,SUP-002,BaanDee Quality Supply Partnership,7.0,20,2026-07-20
+15,SUP-001,"Siam Living Craft Co., Ltd.",,10,2026-07-20
+16,SUP-002,BaanDee Quality Supply Partnership,21.0,10,2026-07-20
+17,SUP-004,Bangkok Kitchenware Trading,7.0,100,2026-07-20
+18,SUP-002,BaanDee Quality Supply Partnership,30.0,50,2026-07-20
+19,SUP-004,Bangkok Kitchenware Trading,14.0,10,2026-07-20
+20,SUP-003,Thai Decor & Furniture Group,21.0,20,2026-07-20
+21,SUP-001,"Siam Living Craft Co., Ltd.",7.0,20,2026-07-20
+22,SUP-002,BaanDee Quality Supply Partnership,7.0,100,2026-07-20
+23,SUP-004,Bangkok Kitchenware Trading,14.0,20,2026-07-20
+24,SUP-003,Thai Decor & Furniture Group,14.0,20,2026-07-20
+25,SUP-003,Thai Decor & Furniture Group,21.0,10,2026-07-20
+26,SUP-002,BaanDee Quality Supply Partnership,30.0,50,2026-07-20
+27,SUP-002,BaanDee Quality Supply Partnership,30.0,50,2026-07-20
+28,SUP-003,Thai Decor & Furniture Group,21.0,100,2026-07-20
+29,SUP-001,"Siam Living Craft Co., Ltd.",7.0,10,2026-07-20
+30,SUP-001,"Siam Living Craft Co., Ltd.",7.0,20,2026-07-20
+31,SUP-004,Bangkok Kitchenware Trading,14.0,10,2026-07-20
+32,SUP-001,"Siam Living Craft Co., Ltd.",28.0,20,2026-07-20
+33,SUP-003,Thai Decor & Furniture Group,14.0,20,2026-07-20
+34,SUP-003,Thai Decor & Furniture Group,7.0,50,2026-07-20
+35,SUP-003,Thai Decor & Furniture Group,7.0,100,2026-07-20
+36,SUP-001,"Siam Living Craft Co., Ltd.",28.0,10,2026-07-20
+37,SUP-004,Bangkok Kitchenware Trading,7.0,50,2026-07-20
+38,SUP-001,"Siam Living Craft Co., Ltd.",21.0,50,2026-07-20
+39,SUP-004,Bangkok Kitchenware Trading,28.0,10,2026-07-20
+40,SUP-001,"Siam Living Craft Co., Ltd.",14.0,10,2026-07-20
+41,SUP-003,Thai Decor & Furniture Group,28.0,20,2026-07-20
+42,SUP-003,Thai Decor & Furniture Group,,10,2026-07-20
+43,SUP-002,BaanDee Quality Supply Partnership,14.0,20,2026-07-20
+44,SUP-001,"Siam Living Craft Co., Ltd.",21.0,20,2026-07-20
+45,SUP-001,"Siam Living Craft Co., Ltd.",28.0,20,2026-07-20
+46,SUP-002,BaanDee Quality Supply Partnership,7.0,50,2026-07-20
+47,SUP-003,Thai Decor & Furniture Group,28.0,20,2026-07-20
+48,SUP-001,"Siam Living Craft Co., Ltd.",28.0,20,2026-07-20
+49,SUP-002,BaanDee Quality Supply Partnership,21.0,20,2026-07-20
+50,SUP-001,"Siam Living Craft Co., Ltd.",7.0,10,2026-07-20
+51,SUP-004,Bangkok Kitchenware Trading,7.0,20,2026-07-20
+52,SUP-003,Thai Decor & Furniture Group,14.0,20,2026-07-20
+53,SUP-004,Bangkok Kitchenware Trading,30.0,10,2026-07-20
+54,SUP-003,Thai Decor & Furniture Group,14.0,50,2026-07-20
+55,SUP-002,BaanDee Quality Supply Partnership,14.0,10,2026-07-20
+56,SUP-003,Thai Decor & Furniture Group,14.0,10,2026-07-20
+57,SUP-003,Thai Decor & Furniture Group,30.0,50,2026-07-20
+58,SUP-002,BaanDee Quality Supply Partnership,21.0,50,2026-07-20
+59,SUP-003,Thai Decor & Furniture Group,28.0,10,2026-07-20
+60,SUP-001,"Siam Living Craft Co., Ltd.",-5.0,20,2026-07-20
+61,SUP-002,BaanDee Quality Supply Partnership,28.0,50,2026-07-20
+62,SUP-002,BaanDee Quality Supply Partnership,14.0,10,2026-07-20
+63,SUP-002,BaanDee Quality Supply Partnership,14.0,20,2026-07-20
+64,SUP-004,Bangkok Kitchenware Trading,28.0,50,2026-07-20
+65,SUP-004,Bangkok Kitchenware Trading,7.0,20,2026-07-20
+66,SUP-003,Thai Decor & Furniture Group,14.0,10,2026-07-20
+67,SUP-002,BaanDee Quality Supply Partnership,7.0,20,2026-07-20
+68,SUP-003,Thai Decor & Furniture Group,30.0,20,2026-07-20
+69,SUP-001,"Siam Living Craft Co., Ltd.",21.0,50,2026-07-20
+70,SUP-002,BaanDee Quality Supply Partnership,14.0,100,2026-07-20
+71,SUP-001,"Siam Living Craft Co., Ltd.",30.0,10,2026-07-20
+72,SUP-003,Thai Decor & Furniture Group,14.0,20,2026-07-20
+73,SUP-004,Bangkok Kitchenware Trading,14.0,10,2026-07-20
+74,SUP-003,Thai Decor & Furniture Group,21.0,20,2026-07-20
+75,SUP-001,"Siam Living Craft Co., Ltd.",7.0,10,2026-07-20
+76,SUP-002,BaanDee Quality Supply Partnership,30.0,10,2026-07-20
+77,SUP-003,Thai Decor & Furniture Group,7.0,20,2026-07-20
+78,SUP-002,BaanDee Quality Supply Partnership,30.0,10,2026-07-20
+79,SUP-004,Bangkok Kitchenware Trading,21.0,50,2026-07-20
+80,SUP-004,Bangkok Kitchenware Trading,14.0,50,2026-07-20
+81,SUP-004,Bangkok Kitchenware Trading,14.0,20,2026-07-20
+82,SUP-002,BaanDee Quality Supply Partnership,21.0,20,2026-07-20
