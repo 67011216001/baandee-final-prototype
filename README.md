@@ -149,19 +149,7 @@ pytest tests/
 
 ---
 
-## 🧪 7. ตารางสรุปการทดสอบ (5 Test Cases)
-
-| Test ID | รายละเอียดกรณีทดสอบ (Scenario) | Input | Expected Result | Actual Result | Pass/Fail |
-| :---: | :--- | :--- | :--- | :--- | :---: |
-| **TC-01** | คำนวณความเสี่ยง SKU ปกติที่มีสต็อกพอ | SKU-0001 (Stock=5, Sales/day=0.1, LeadTime=14) | `risk_status` = 'NORMAL' | `risk_status` = 'NORMAL' | **PASS** |
-| **TC-02** | ตรวจจับสินค้าสต็อกหมดหรือเสี่ยงวิกฤต | SKU-0002 (Stock=0 หรือ DaysOfCover < LeadTime) | `risk_status` = 'CRITICAL_RISK' | `risk_status` = 'CRITICAL_RISK' | **PASS** |
-| **TC-03** | หยุดประเมินเมื่อข้อมูล Lead Time ขาดหาย | SKU-0015 (Lead Time = `NaN`) | `risk_status` = 'HUMAN_REVIEW_NEEDED' | `risk_status` = 'HUMAN_REVIEW_NEEDED' | **PASS** |
-| **TC-04** | สร้างตั๋วสั่งซื้อและบันทึกสถานะถาวร | Request SKU-0001, Qty 10 | บันทึกตั๋วสถานะ 'Draft' ลงไฟล์ CSV | สร้าง REQ-0001 สัมพันธ์สำเร็จ | **PASS** |
-| **TC-05** | ลบตั๋วสั่งซื้อแบบ Soft Delete | Delete REQ-0001 | `is_deleted` เปลี่ยนเป็น `True` ข้อมูลไม่สูญหาย | `is_deleted` = True ซ่อนหน้าจอสำเร็จ | **PASS** |
-
----
-
-## ⚠️ 8. ข้อจำกัดและสิ่งที่ไม่ควรอ้างอิงเกินจริง (Limitations)
+## ⚠️ 7. ข้อจำกัดและสิ่งที่ไม่ควรอ้างอิงเกินจริง (Limitations)
 
 1. **ใช้ Snapshot Date เป็น "วันนี้":** กำหนดให้วันที่ 31 ก.ค. 2026 เป็นวันอ้างอิงปัจจุบันของระบบ เพื่อให้สอดคล้องกับชุดข้อมูลประวัติการขาย
 2. **ยอดขายเฉลี่ยเป็นค่าประมาณ:** คำนวณจากยอดขายย้อนหลัง 30 วัน ไม่ใช่ตัวเลขการพยากรณ์อนาคตด้วย Machine Learning
@@ -169,13 +157,13 @@ pytest tests/
 
 ---
 
-## 🤖 9. เหตุผลที่ไม่ใช้ AI ในตัวผลิตภัณฑ์ (AI Policy)
+## 🤖 8. เหตุผลที่ไม่ใช้ AI ในตัวผลิตภัณฑ์ (AI Policy)
 
 สูตรการคำนวณความเสี่ยงขาดสต็อกอิงจากกฎทางธุรกิจที่ชัดเจน (`Days of Cover vs Lead Time`) ซึ่งเป็นเชิงตรรกะที่แน่นอน (**Deterministic Formula**) การใช้ AI/LLM ในส่วนนี้ไม่ช่วยเพิ่มประสิทธิภาพ และอาจเสี่ยงต่อการสร้างตัวเลขหลอนที่ไม่มีหลักฐานรองรับ (Hallucination) ทางทีมจึงใช้ Python Code ในการประเมินผล 100% *(รายละเอียดเพิ่มเติมอยู่ที่ `AI_USE.md`)*
 
 ---
 
-## 👥 10. สมาชิกในทีมและบทบาทหน้าที่ (Team Members & Roles)
+## 👥 9. สมาชิกในทีมและบทบาทหน้าที่ (Team Members & Roles)
 
 | ลำดับ | รหัสนิสิต | ชื่อ - นามสกุล | บทบาทและส่วนงานที่รับผิดชอบ |
 | :---: | :---: | :----- | :--- |
@@ -183,3 +171,7 @@ pytest tests/
 | 2 | `67011216004` | [นิตยา บุตรดีขันธ์]   | **Synthetic Data &amp; Risk Calculation:** สร้างข้อมูลสังเคราะห์ `supplier_lead_time.csv` พร้อมฝังเคสทดสอบ, รวมข้อมูลจากหลายแหล่ง (Data Join) และเขียนเอนจินคำนวณความเสี่ยงขาดสต็อก |
 | 3 | `67011216001` | [ณัฐรีญา ศรีดาวงษ์]   | **GitHub &amp; UI Prototype Development:** จัดการโครงสร้างโปรเจกต์บน GitHub Repository, พัฒนาระบบบันทึกตั๋วสั่งซื้อ (Storage Engine) และหน้าจอ Gradio Dashboard UI |
 | 4 | `67011216014` | [กัญญาณัฐ สีแสงน้อย]   | **System Testing &amp; Project Documentation:** ออกแบบและรันการทดสอบระบบครบ 5 Test Cases, รวบรวมข้อมูล จัดทำเอกสารสรุปโปรเจกต์ (`README.md`, `AI_USE.md`) และสไลด์นำเสนอ |
+
+---
+
+## 🔗 ลิงก์สำหรับทดสอบระบบ (Quick Links)
