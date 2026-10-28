@@ -13,9 +13,9 @@
 ┌─────────────────────────────────────────────────────────────────────────────────┐
 │                           BaanDee System Architecture                           │
 ├──────────────────────────────────────────┬──────────────────────────────────────┤
-│ 1. Runtime Product (ระบบทำงานจริง)       │ 2. Development Phase (ขั้นตอนการพัฒนา) │
+│ 1. Runtime Product (ระบบทำงานจริง)        │ 2. Development Phase (ขั้นตอนการพัฒนา) │
 │ • 0% AI / LLM Engine                     │ • AI-Assisted Copilot Development    │
-│ • Deterministic Rule-Based (100% Python) │ • Human-in-the-Loop Verification    │
+│ • Deterministic Rule-Based (100% Python) │ • Human-in-the-Loop Verification     │
 │ • Zero Hallucination Risk                │ • Code & Logic 100% Peer-Reviewed    │
 └──────────────────────────────────────────┴──────────────────────────────────────┘
 ```
