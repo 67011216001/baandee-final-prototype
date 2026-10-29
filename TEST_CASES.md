@@ -1,4 +1,4 @@
-## 3. สรุปผลการทดสอบอัตโนมัติ (Automated Test Summary)
+## สรุปผลการทดสอบอัตโนมัติ (Automated Test Summary)
 
 รันด้วยคำสั่ง `python tests/test_system.py` ผลรวม **5/5 tests passed**
 
