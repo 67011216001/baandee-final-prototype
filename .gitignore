@@ -6,3 +6,4 @@ __pycache__/
 .env
 .DS_Store
 .vscode/*.log
+data/app_state/test_results.csv
