@@ -21,7 +21,7 @@
 ```
 
 1. **ส่วนผลิตภัณฑ์หลักขณะรันระบบ (Runtime Product):** **<u>ไม่มีการใช้ AI หรือ LLM ประมวลผลในเอนจินหลัก 100%</u>**  
-   สูตรการคำนวณความเสี่ยงขาดสต็อก (`Days of Cover = Available Qty / Daily Sales Rate`) การประเมินสถานะความเสี่ยง (`NORMAL`, `CRITICAL_RISK`, `HUMAN_REVIEW_NEEDED`) และระบบคัดกรองกักกันข้อมูล (`Data Quarantine Rules`) ทำงานด้วยตรรกะแบบกำหนดผลลัพธ์แน่นอน (**Deterministic Rule-Based Code**) ผ่าน Python 100% ทั้งนี้เพื่อขจัดความเสี่ยงจากการสร้างตัวเลขหลอน (Hallucination) และรับประกันว่าทุกการตัดสินใจสั่งซื้อสามารถตรวจสอบที่มา (Traceability) ได้อย่างแม่นยำ
+   สูตรการคำนวณความเสี่ยงขาดสต็อก (`Days of Cover = Available Qty / Daily Sales Rate`) การประเมินสถานะความเสี่ยง (`NORMAL`, `CRITICAL_RISK`, `HUMAN_REVIEW_NEEDED`) และระบบคัดกรองกักกันข้อมูล (`Data Quarantine Rules`) ทำงานด้วยตรรกะแบบกำหนดผลลัพธ์แน่นอน (**Deterministic Rule-Based Code**) ผ่าน Python 100% ทั้งนี้เพื่อขจัดความเสี่ยงจากการสร้างตัวเลขหลอน (Hallucination) และสามารถตรวจสอบที่มาทุกการตัดสินใจสั่งซื้อได้อย่างแม่นยำ
 
 2. **ส่วนกระบวนการพัฒนาระบบ (Development & Design Phase):** **<u>ใช้ AI เป็นเครื่องมือเติมเต็มประสิทธิภาพ (AI-Assisted Development)</u>**  
    ทีมผู้พัฒนาใช้ โมเดลภาษาขนาดใหญ่ (LLM) เช่น Claude 3.5 Sonnet และ Google Gemini ในลักษณะ **Co-pilot / Developer Assistant** เพื่อช่วยเพิ่มความเร็วในการสืบค้น Syntax, ออกแบบโครงสร้าง Regex, ร่างตัวอย่างการเขียน API Endpoint, และเสนอแนวคิดขอบเขตเคสทดสอบ (Test Scenarios) โดยผลลัพธ์ทุกชิ้นจาก AI ต้องผ่านการตรวจสอบ รันโค้ดจริง และยืนยันความถูกต้องโดยสมาชิกในทีม (Human Verification) 100% ก่อนนำมาใช้งาน
