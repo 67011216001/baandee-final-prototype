@@ -5,3 +5,5 @@ cd "$(dirname "$0")"
 source .venv/bin/activate
 python -m pip install -q -r requirements.txt
 python -m uvicorn api.main:app --port 8000
+gh codespace ports visibility 8000:public -c $CODESPACE_NAME
+

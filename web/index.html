@@ -177,6 +177,20 @@ dt{color:var(--muted)} dd{margin:0;font-weight:600;text-align:right;font-variant
 
   <!-- ====== หน้า 2: ร่างคำขอ ====== -->
   <section id="view-req" hidden>
+    <div class="toolbar">
+     <button class="btn" id="addReq">＋ เพิ่มร่างคำขอ</button>
+     <span class="note">เลือกสินค้าและใส่จำนวน ระบบจะบันทึกเป็นร่างให้หัวหน้าอนุมัติ</span>
+    </div>
+    <div class="card" id="addForm" hidden style="margin-bottom:14px;padding:16px">
+     <div class="row">
+      <input class="input" id="addSku" list="skuList" placeholder="รหัส SKU เช่น SKU-0001">
+      <datalist id="skuList"></datalist>
+      <input class="input qty" id="addQty" type="number" min="1" step="1" placeholder="จำนวน">
+      <button class="btn" id="addSave">บันทึกร่าง</button>
+      <button class="btn ghost" id="addCancel">ยกเลิก</button>
+     </div>
+     <p class="note" id="addHint" style="margin:8px 0 0"></p>
+    </div>
     <div class="card"><div class="scroll">
       <table>
         <thead><tr><th>รหัสร่าง</th><th>สินค้า</th><th>ความเสี่ยง ณ วันสร้าง</th><th class="num">จำนวนขอสั่ง</th><th>สถานะ</th><th>อัปเดตล่าสุด</th><th></th></tr></thead>
@@ -384,7 +398,26 @@ document.addEventListener("change", async e=>{
     catch(err){ toast(err.message); loadRequests(); }
   }
 });
-$("#q").addEventListener("input", e=>{ state.q=e.target.value; renderRows(); });
+/* ---------- เพิ่มร่างคำขอด้วยมือ ---------- */
+   function fillSkuList(){ $("#skuList").innerHTML = state.all.filter(r=>r.risk_status!=="HUMAN_REVIEW_NEEDED").map(r=>`<option value="${esc(r.product_id)}">${esc(r.product_name)}</option>`).join(""); }
+   $("#addReq").addEventListener("click", ()=>{ fillSkuList(); $("#addForm").hidden=false; $("#addSku").focus(); });
+   $("#addCancel").addEventListener("click", ()=>{ $("#addForm").hidden=true; });
+   $("#addSku").addEventListener("input", ()=>{
+     const r = state.all.find(x=>x.product_id.toLowerCase()===$("#addSku").value.trim().toLowerCase());
+     $("#addHint").textContent = r ? (r.risk_status==="HUMAN_REVIEW_NEEDED" ? "สินค้านี้ข้อมูลไม่สมบูรณ์ ยังสร้างร่างไม่ได้" : `${r.product_name} · ${LABEL[r.risk_status]} · แนะนำ ${fmt(r.suggested_qty)} ชิ้น`) : "";
+     if(r && r.risk_status!=="HUMAN_REVIEW_NEEDED" && !$("#addQty").value && r.suggested_qty) $("#addQty").value = Math.round(r.suggested_qty);
+   });
+   $("#addSave").addEventListener("click", async ()=>{
+     const id = $("#addSku").value.trim(), qty = parseInt($("#addQty").value,10);
+     if(!id){ toast("กรุณาใส่รหัส SKU"); return; }
+     if(!(qty>0)){ toast("กรุณาใส่จำนวนที่มากกว่า 0"); return; }
+     try{
+       const r = await api("/api/requests",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({product_id:id,requested_qty:qty})});
+       $("#addSku").value=""; $("#addQty").value=""; $("#addHint").textContent=""; $("#addForm").hidden=true;
+       await loadRequests(); toast(`สร้างร่างคำขอ ${r.request_id} เรียบร้อยแล้ว (บันทึกลง reorder_requests.csv)`);
+     }catch(err){ toast(err.message); }
+   });$("#q").addEventListener
+("input", e=>{ state.q=e.target.value; renderRows(); });
 document.addEventListener("keydown", e=>{
   if(e.key==="Escape") closeDrawer();
   if(e.key==="Enter" && e.target.closest("#rows tr")) openDrawer(e.target.closest("tr").dataset.id);
