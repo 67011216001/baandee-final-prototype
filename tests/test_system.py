@@ -51,25 +51,52 @@ def run_system_tests():
     app_state_dir = BASE_DIR / "data" / "app_state"
     app_state_dir.mkdir(parents=True, exist_ok=True)
 
+   
     # -------------------------------------------------------------------------
-    # TC-01: Data Cleaning & Quarantine
+    # TC-01: Invalid Data Detection and Human Review
+    # ตรวจว่าระบบระบุข้อมูลผิดปกติและให้เหตุผลสำหรับตรวจสอบได้
     # -------------------------------------------------------------------------
     try:
-        review_file = (
-            BASE_DIR / "data" / "cleaned" / "review_needed.csv"
-        )
+        df_risk = calculate_stock_risk(BASE_DIR, save=False)
 
-        if not review_file.exists():
-            raise FileNotFoundError(
-                f"ไม่พบไฟล์ {review_file}"
+        required_columns = {
+            "product_id",
+            "risk_status",
+            "review_reason",
+        }
+
+        missing_columns = required_columns - set(df_risk.columns)
+
+        if missing_columns:
+            raise ValueError(
+                f"ไม่พบคอลัมน์ที่จำเป็น: {sorted(missing_columns)}"
             )
 
-        df_review = pd.read_csv(review_file)
-        invalid_count = len(df_review)
+        review_rows = df_risk[
+            df_risk["risk_status"] == "HUMAN_REVIEW_NEEDED"
+        ]
 
-        passed = invalid_count >= 2
+        review_count = len(review_rows)
+
+        reasons_filled = (
+            review_rows["review_reason"]
+            .fillna("")
+            .astype(str)
+            .str.strip()
+            .ne("")
+        )
+
+        reasons_count = int(reasons_filled.sum())
+
+        passed = (
+            review_count >= 2
+            and reasons_count == review_count
+        )
+
         actual = (
-            f"พบข้อมูลใน review_needed.csv จำนวน {invalid_count} รายการ"
+            f"ประมวลผล {len(df_risk)} SKUs; "
+            f"ต้องตรวจสอบ {review_count} รายการ; "
+            f"มีเหตุผลประกอบ {reasons_count} รายการ"
         )
 
     except Exception as exc:
@@ -79,9 +106,10 @@ def run_system_tests():
     record_result(
         results,
         "TC-01",
-        "Data Cleaning & Quarantine Isolation",
-        "data/cleaned/review_needed.csv",
-        "พบข้อมูลที่ถูกกักกันอย่างน้อย 2 รายการ",
+        "Invalid Data Detection and Human Review",
+        "ข้อมูลสินค้า สต็อก และ Supplier Lead Time",
+        "พบข้อมูลที่ต้องตรวจสอบอย่างน้อย 2 รายการ "
+        "และทุกรายการมีเหตุผลประกอบ",
         actual,
         passed,
     )
