@@ -1,0 +1,395 @@
+<!doctype html>
+<html lang="th">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>BaanDee Stockout Radar</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Thai:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#f5f4f0; --surface:#ffffff; --ink:#1d2330; --muted:#677084; --line:#e4e2db; --line-soft:#efede7;
+  --brand:#1f3a5f; --brand-soft:#e7edf5;
+  --crit:#c2362b; --crit-bg:#fdeceb;
+  --warn:#b97a05; --warn-bg:#fff4dc;
+  --ok:#2b8a57;   --ok-bg:#e6f4ec;
+  --rev:#55627f;  --rev-bg:#e9ecf3;
+  --radius:14px; --shadow:0 1px 2px rgba(20,28,45,.05),0 6px 20px rgba(20,28,45,.05);
+}
+@media (prefers-color-scheme: dark){
+  :root{
+    --bg:#12151c; --surface:#1a1f2a; --ink:#e8ebf2; --muted:#98a2b8; --line:#2b3242; --line-soft:#232a38;
+    --brand:#8fb4e8; --brand-soft:#232f45;
+    --crit:#ff8a80; --crit-bg:#3a1f22; --warn:#f3be5a; --warn-bg:#3a2f17;
+    --ok:#6fd3a0; --ok-bg:#183326; --rev:#aab6d6; --rev-bg:#262d40;
+    --shadow:0 1px 2px rgba(0,0,0,.3),0 6px 20px rgba(0,0,0,.25);
+  }
+}
+*{box-sizing:border-box}
+html,body{margin:0}
+body{background:var(--bg);color:var(--ink);font-family:"IBM Plex Sans Thai","Noto Sans Thai","Sarabun",system-ui,-apple-system,"Segoe UI",sans-serif;font-size:15px;line-height:1.5;-webkit-font-smoothing:antialiased}
+.wrap{max-width:1240px;margin:0 auto;padding:0 20px 80px}
+button{font:inherit;cursor:pointer}
+button:focus-visible,input:focus-visible,select:focus-visible{outline:2px solid var(--brand);outline-offset:2px}
+
+/* header */
+header{display:flex;align-items:center;gap:14px;padding:26px 0 18px;flex-wrap:wrap}
+.logo{width:42px;height:42px;border-radius:12px;background:var(--brand);display:grid;place-items:center;color:#fff}
+@media (prefers-color-scheme: dark){.logo{color:#12151c}}
+h1{font-size:22px;margin:0;font-weight:700;letter-spacing:-.01em}
+.sub{color:var(--muted);font-size:13.5px}
+.spacer{flex:1}
+.chip{display:inline-flex;align-items:center;gap:7px;border:1px solid var(--line);background:var(--surface);padding:6px 12px;border-radius:999px;font-size:13px;color:var(--muted)}
+.dot{width:8px;height:8px;border-radius:50%;background:var(--ok)}
+
+/* tabs */
+.tabs{display:flex;gap:4px;border-bottom:1px solid var(--line);margin-bottom:22px}
+.tab{background:none;border:0;padding:11px 16px;color:var(--muted);font-weight:500;border-bottom:2px solid transparent;margin-bottom:-1px}
+.tab[aria-selected=true]{color:var(--brand);border-color:var(--brand);font-weight:600}
+.tab .n{background:var(--brand-soft);color:var(--brand);border-radius:999px;padding:1px 8px;font-size:12px;margin-left:6px}
+
+/* KPI */
+.kpis{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-bottom:22px}
+.kpi{background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);padding:16px 18px;text-align:left;box-shadow:var(--shadow);transition:transform .12s, border-color .12s;position:relative;overflow:hidden}
+.kpi:hover{transform:translateY(-2px)}
+.kpi[aria-pressed=true]{border-color:var(--c);box-shadow:0 0 0 1px var(--c),var(--shadow)}
+.kpi::before{content:"";position:absolute;left:0;top:0;bottom:0;width:4px;background:var(--c)}
+.kpi .lbl{color:var(--muted);font-size:13px}
+.kpi .val{font-size:34px;font-weight:700;line-height:1.15;color:var(--c);letter-spacing:-.02em}
+.kpi .hint{font-size:12.5px;color:var(--muted)}
+.k-crit{--c:var(--crit)} .k-warn{--c:var(--warn)} .k-ok{--c:var(--ok)} .k-rev{--c:var(--rev)}
+
+/* toolbar */
+.toolbar{display:flex;gap:10px;margin-bottom:14px;flex-wrap:wrap;align-items:center}
+.input,select{border:1px solid var(--line);background:var(--surface);color:var(--ink);padding:9px 13px;border-radius:10px;font:inherit}
+.input{min-width:260px}
+.toolbar .count{margin-left:auto;color:var(--muted);font-size:13.5px}
+.link{background:none;border:0;color:var(--brand);padding:4px 6px;font-weight:500}
+
+/* table */
+.card{background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);box-shadow:var(--shadow);overflow:hidden}
+.scroll{overflow-x:auto}
+table{border-collapse:collapse;width:100%;min-width:900px}
+th{font-size:12.5px;text-transform:none;color:var(--muted);font-weight:600;text-align:left;padding:12px 14px;background:var(--surface);border-bottom:1px solid var(--line);white-space:nowrap}
+td{padding:12px 14px;border-bottom:1px solid var(--line-soft);vertical-align:middle}
+tbody tr{cursor:pointer;transition:background .1s}
+tbody tr:hover{background:var(--brand-soft)}
+tbody tr:last-child td{border-bottom:0}
+.num{text-align:right;font-variant-numeric:tabular-nums}
+.sku{font-weight:600}
+.small{font-size:12.5px;color:var(--muted)}
+.badge{display:inline-flex;align-items:center;gap:6px;padding:3px 10px;border-radius:999px;font-size:12.5px;font-weight:600;white-space:nowrap}
+.badge::before{content:"";width:7px;height:7px;border-radius:50%;background:currentColor}
+.b-CRITICAL_RISK{background:var(--crit-bg);color:var(--crit)}
+.b-WARNING_RISK{background:var(--warn-bg);color:var(--warn)}
+.b-NORMAL{background:var(--ok-bg);color:var(--ok)}
+.b-HUMAN_REVIEW_NEEDED{background:var(--rev-bg);color:var(--rev)}
+.b-Draft{background:var(--warn-bg);color:var(--warn)} .b-Approved{background:var(--ok-bg);color:var(--ok)}
+
+/* cover bar */
+.cover{min-width:150px}
+.track{position:relative;height:8px;border-radius:6px;background:var(--line-soft);margin-top:5px}
+.fill{position:absolute;left:0;top:0;bottom:0;border-radius:6px}
+.mark{position:absolute;top:-4px;bottom:-4px;width:2px;background:var(--ink);opacity:.55;border-radius:2px}
+.f-CRITICAL_RISK{background:var(--crit)} .f-WARNING_RISK{background:var(--warn)} .f-NORMAL{background:var(--ok)}
+.when{font-weight:500}
+.when.late{color:var(--crit)}
+.empty{padding:50px 20px;text-align:center;color:var(--muted)}
+
+/* drawer */
+.overlay{position:fixed;inset:0;background:rgba(10,14,22,.42);opacity:0;pointer-events:none;transition:opacity .2s;z-index:20}
+.overlay.on{opacity:1;pointer-events:auto}
+.drawer{position:fixed;top:0;right:0;bottom:0;width:min(520px,100%);background:var(--bg);z-index:21;transform:translateX(102%);transition:transform .25s ease;overflow-y:auto;box-shadow:-10px 0 40px rgba(0,0,0,.18)}
+.drawer.on{transform:none}
+.dh{position:sticky;top:0;background:var(--bg);padding:18px 22px 12px;border-bottom:1px solid var(--line);display:flex;gap:12px;align-items:flex-start;z-index:1}
+.dh h2{margin:0;font-size:19px}
+.close{margin-left:auto;background:var(--surface);border:1px solid var(--line);border-radius:10px;width:34px;height:34px;color:var(--ink)}
+.db{padding:18px 22px 40px;display:grid;gap:16px}
+.sec{background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:14px 16px}
+.sec h3{margin:0 0 4px;font-size:13.5px;display:flex;align-items:center;gap:8px}
+.tag{font-size:11.5px;padding:2px 8px;border-radius:6px;font-weight:600}
+.t-fact{background:var(--ok-bg);color:var(--ok)} .t-est{background:var(--warn-bg);color:var(--warn)}
+dl{margin:8px 0 0;display:grid;grid-template-columns:1fr auto;gap:7px 14px}
+dt{color:var(--muted)} dd{margin:0;font-weight:600;text-align:right;font-variant-numeric:tabular-nums}
+.formula{font-size:13px;color:var(--muted);margin-top:10px;padding-top:10px;border-top:1px dashed var(--line)}
+.alert{border-radius:12px;padding:14px 16px;background:var(--rev-bg);color:var(--rev);font-weight:500}
+.verdict{border-radius:12px;padding:14px 16px;font-weight:600}
+.v-CRITICAL_RISK{background:var(--crit-bg);color:var(--crit)} .v-WARNING_RISK{background:var(--warn-bg);color:var(--warn)} .v-NORMAL{background:var(--ok-bg);color:var(--ok)}
+.verdict small{display:block;font-weight:400;opacity:.9;margin-top:2px}
+.row{display:flex;gap:10px;align-items:center;flex-wrap:wrap}
+.qty{width:120px;min-width:0}
+.btn{border:0;border-radius:10px;padding:10px 16px;font-weight:600;background:var(--brand);color:#fff}
+@media (prefers-color-scheme: dark){.btn{color:#12151c}}
+.btn:disabled{opacity:.5;cursor:not-allowed}
+.btn.ghost{background:var(--surface);color:var(--ink);border:1px solid var(--line)}
+.btn.sm{padding:6px 11px;font-size:13px}
+.btn.danger{background:var(--crit-bg);color:var(--crit)}
+.note{font-size:12.5px;color:var(--muted)}
+
+/* toast */
+.toast{position:fixed;left:50%;bottom:26px;transform:translate(-50%,30px);background:var(--ink);color:var(--bg);padding:11px 18px;border-radius:12px;opacity:0;transition:.25s;z-index:40;font-weight:500}
+.toast.on{opacity:1;transform:translate(-50%,0)}
+
+@media (max-width:820px){.kpis{grid-template-columns:repeat(2,1fr)} .input{min-width:0;flex:1 1 100%}}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <div class="logo" aria-hidden="true">
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 8 12 3 3 8v8l9 5 9-5V8Z"/><path d="m3 8 9 5 9-5M12 13v8"/></svg>
+    </div>
+    <div>
+      <h1>BaanDee Stockout Radar</h1>
+      <div class="sub">ตรวจสอบสินค้าที่เสี่ยงขาดสต็อก ก่อนของจะหมด · ต้นแบบสำหรับเจ้าหน้าที่จัดซื้อ</div>
+    </div>
+    <div class="spacer"></div>
+    <span class="chip"><span class="dot"></span><span id="snap">กำลังโหลด…</span></span>
+  </header>
+
+  <nav class="tabs" role="tablist">
+    <button class="tab" role="tab" id="tab-risk" aria-selected="true">ตรวจความเสี่ยง</button>
+    <button class="tab" role="tab" id="tab-req" aria-selected="false">ร่างคำขอสั่งซื้อ<span class="n" id="reqCount">0</span></button>
+  </nav>
+
+  <!-- ====== หน้า 1: ความเสี่ยง ====== -->
+  <section id="view-risk">
+    <div class="kpis" id="kpis"></div>
+    <div class="toolbar">
+      <input class="input" id="q" type="search" placeholder="ค้นหารหัส SKU หรือชื่อสินค้า…" aria-label="ค้นหา">
+      <select id="cat" aria-label="หมวดสินค้า"><option value="">ทุกหมวด</option></select>
+      <button class="link" id="clear" hidden>ล้างตัวกรอง</button>
+      <span class="count" id="count"></span>
+    </div>
+    <div class="card"><div class="scroll">
+      <table>
+        <thead><tr>
+          <th>สินค้า</th><th>หมวด</th><th class="num">สต็อก</th><th class="num">ขาย/วัน</th>
+          <th class="num">Lead Time</th><th>สต็อกพอขาย (วัน)</th><th>ควรสั่งภายใน</th><th>ระดับความเสี่ยง</th>
+        </tr></thead>
+        <tbody id="rows"></tbody>
+      </table>
+      <div class="empty" id="empty" hidden>ไม่พบรายการที่ตรงกับตัวกรอง</div>
+    </div></div>
+    <p class="note" style="margin-top:12px">แถบสีแสดง "วันที่สต็อกพอขาย" เส้นดำคือ Lead Time ของซัพพลายเออร์ ถ้าแถบสั้นกว่าเส้นดำ แปลว่าของมาไม่ทัน · ยอดขาย/วันเป็นค่าประมาณจากยอดขาย 30 วันย้อนหลัง</p>
+  </section>
+
+  <!-- ====== หน้า 2: ร่างคำขอ ====== -->
+  <section id="view-req" hidden>
+    <div class="card"><div class="scroll">
+      <table>
+        <thead><tr><th>รหัสร่าง</th><th>สินค้า</th><th>ความเสี่ยง ณ วันสร้าง</th><th class="num">จำนวนขอสั่ง</th><th>สถานะ</th><th>อัปเดตล่าสุด</th><th></th></tr></thead>
+        <tbody id="reqRows"></tbody>
+      </table>
+      <div class="empty" id="reqEmpty" hidden>ยังไม่มีร่างคำขอสั่งซื้อ · เลือกสินค้าในหน้า "ตรวจความเสี่ยง" แล้วกด "สร้างร่างคำขอ"</div>
+    </div></div>
+    <p class="note" style="margin-top:12px">นี่คือ "ร่างภายใน" เพื่อให้หัวหน้าอนุมัติเท่านั้น ระบบไม่ได้ส่งใบสั่งซื้อไปยังซัพพลายเออร์จริง · การลบเป็นการซ่อนรายการ (ข้อมูลยังอยู่ในไฟล์)</p>
+  </section>
+</div>
+
+<div class="overlay" id="ov"></div>
+<aside class="drawer" id="drawer" aria-hidden="true" aria-label="รายละเอียดสินค้า"></aside>
+<div class="toast" id="toast" role="status"></div>
+
+<script>
+const LABEL = {CRITICAL_RISK:"เสี่ยงสูง", WARNING_RISK:"เสี่ยงปานกลาง", NORMAL:"ยังไม่เสี่ยง", HUMAN_REVIEW_NEEDED:"ต้องให้คนตรวจ"};
+const KPI = [
+  ["CRITICAL_RISK","k-crit","ของจะหมดก่อนของใหม่มาถึง"],
+  ["WARNING_RISK","k-warn","เหลือเวลาสั่งไม่นาน"],
+  ["NORMAL","k-ok","สต็อกเพียงพอ"],
+  ["HUMAN_REVIEW_NEEDED","k-rev","ข้อมูลไม่พอ ระบบไม่เดา"],
+];
+const $ = s => document.querySelector(s);
+const esc = s => String(s ?? "").replace(/[&<>"']/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+const fmt = (v, d=0) => v == null ? "–" : Number(v).toLocaleString("th-TH", {maximumFractionDigits:d});
+const state = {all:[], summary:null, status:"", cat:"", q:""};
+
+async function api(path, opts){
+  const r = await fetch(path, opts);
+  if(!r.ok){ let m = r.statusText; try{ const j = await r.json(); m = j.detail || j.message || m; }catch{} throw new Error(m); }
+  return r.json();
+}
+function toast(msg){ const t=$("#toast"); t.textContent=msg; t.classList.add("on"); clearTimeout(t._h); t._h=setTimeout(()=>t.classList.remove("on"),2600); }
+
+/* ---------- โหลดข้อมูล ---------- */
+async function load(){
+  try{
+    const [summary, all] = await Promise.all([api("/api/summary"), api("/api/risk")]);
+    state.summary = summary; state.all = all;
+    $("#snap").textContent = "ข้อมูลสต็อก ณ " + new Date(summary.snapshot_date).toLocaleDateString("th-TH-u-ca-gregory",{day:"numeric",month:"short",year:"numeric"});
+    $("#cat").innerHTML = '<option value="">ทุกหมวด</option>' + summary.categories.map(c=>`<option>${esc(c)}</option>`).join("");
+    renderKpis(); renderRows(); await loadRequests();
+  }catch(e){
+    $("#rows").innerHTML = ""; $("#empty").hidden=false; $("#empty").textContent = "โหลดข้อมูลไม่สำเร็จ: " + e.message;
+  }
+}
+
+function renderKpis(){
+  $("#kpis").innerHTML = KPI.map(([k,cls,hint])=>`
+    <button class="kpi ${cls}" data-status="${k}" aria-pressed="${state.status===k}">
+      <div class="lbl">${LABEL[k]}</div><div class="val">${state.summary.counts[k]}</div><div class="hint">${hint}</div>
+    </button>`).join("");
+}
+
+function filtered(){
+  const q = state.q.trim().toLowerCase();
+  return state.all.filter(r =>
+    (!state.status || r.risk_status===state.status) && (!state.cat || r.category===state.cat) &&
+    (!q || r.product_id.toLowerCase().includes(q) || (r.product_name||"").toLowerCase().includes(q)));
+}
+
+function whenText(r){
+  if(r.risk_status==="HUMAN_REVIEW_NEEDED") return '<span class="small">ประเมินไม่ได้</span>';
+  if(r.days_until_order==null) return '<span class="small">ไม่มียอดขาย</span>';
+  const d = r.days_until_order;
+  if(d<0) return `<span class="when late">เลยกำหนดแล้ว ${fmt(-d)} วัน</span>`;
+  if(d===0) return '<span class="when late">วันนี้</span>';
+  return `<span class="when">อีก ${fmt(d)} วัน</span>`;
+}
+
+function coverBar(r){
+  if(r.risk_status==="HUMAN_REVIEW_NEEDED") return '<span class="small">–</span>';
+  if(r.days_of_cover==null) return '<span class="small">ไม่มียอดขาย</span>';
+  const span = Math.max(r.lead_time_days + 21, r.days_of_cover, 1) ;
+  const w = Math.min(r.days_of_cover/span*100,100), m = r.lead_time_days/span*100;
+  return `<div class="cover"><b>${fmt(r.days_of_cover,1)}</b> วัน
+    <div class="track"><div class="fill f-${r.risk_status}" style="width:${w}%"></div><div class="mark" style="left:${m}%"></div></div></div>`;
+}
+
+function renderRows(){
+  const rows = filtered();
+  $("#count").textContent = `แสดง ${rows.length} จาก ${state.all.length} รายการ`;
+  $("#clear").hidden = !(state.status||state.cat||state.q);
+  $("#empty").hidden = rows.length>0;
+  $("#rows").innerHTML = rows.map(r=>`
+    <tr data-id="${esc(r.product_id)}" tabindex="0">
+      <td><div class="sku">${esc(r.product_id)}</div><div class="small">${esc(r.product_name)}</div></td>
+      <td>${esc(r.category ?? "–")}</td>
+      <td class="num">${fmt(r.available_qty)}</td>
+      <td class="num">${fmt(r.daily_sales_rate,2)}</td>
+      <td class="num">${r.lead_time_days==null?'<span class="small">ไม่ทราบ</span>':fmt(r.lead_time_days)+" วัน"}</td>
+      <td>${coverBar(r)}</td>
+      <td>${whenText(r)}</td>
+      <td><span class="badge b-${r.risk_status}">${LABEL[r.risk_status]}</span></td>
+    </tr>`).join("");
+}
+
+/* ---------- รายละเอียดสินค้า ---------- */
+function openDrawer(id){
+  const r = state.all.find(x=>x.product_id===id); if(!r) return;
+  const review = r.risk_status==="HUMAN_REVIEW_NEEDED";
+  const verdict = review ? `<div class="alert">⚠ ระบบหยุดประเมินสินค้านี้ — ${esc(r.review_reason)}<br><span class="note" style="color:inherit">ไม่มีการเดาค่าแทน กรุณาให้เจ้าหน้าที่ตรวจสอบข้อมูลต้นทางก่อน</span></div>`
+    : `<div class="verdict v-${r.risk_status}">${LABEL[r.risk_status]}
+        <small>${r.days_until_order==null ? "ไม่มียอดขายใน 30 วัน จึงไม่มีความเสี่ยงจากการขาย"
+          : r.days_until_order<0 ? `สต็อกพอขายแค่ ${fmt(r.days_of_cover,1)} วัน แต่ซัพพลายเออร์ใช้ ${fmt(r.lead_time_days)} วัน — เลยกำหนดสั่งมาแล้ว ${fmt(-r.days_until_order)} วัน`
+          : `สต็อกพอขาย ${fmt(r.days_of_cover,1)} วัน ซัพพลายเออร์ใช้ ${fmt(r.lead_time_days)} วัน — ควรสั่งภายใน ${fmt(r.days_until_order)} วัน`}</small></div>`;
+  const asOf = r.as_of ? new Date(r.as_of).toLocaleDateString("th-TH-u-ca-gregory",{day:"numeric",month:"short",year:"numeric"}) : "–";
+  const canDraft = !review;
+  const sug = r.suggested_qty || (r.minimum_order_qty ? Math.round(r.minimum_order_qty) : 1);
+
+  $("#drawer").innerHTML = `
+    <div class="dh">
+      <div><h2>${esc(r.product_id)} · ${esc(r.product_name)}</h2>
+      <div class="small">${esc(r.category ?? "–")} · ฿${fmt(r.unit_price_thb)} / ชิ้น</div></div>
+      <button class="close" aria-label="ปิด" id="closeD">✕</button>
+    </div>
+    <div class="db">
+      ${verdict}
+      <div class="sec">
+        <h3>ข้อเท็จจริงที่ยืนยันแล้ว <span class="tag t-fact">จากฐานข้อมูล</span></h3>
+        <dl>
+          <dt>สต็อกคงเหลือ (ณ ${asOf})</dt><dd>${fmt(r.available_qty)} ชิ้น</dd>
+          <dt>ซัพพลายเออร์</dt><dd>${esc(r.supplier_name ?? "ไม่ทราบ")}</dd>
+          <dt>Lead Time</dt><dd>${r.lead_time_days==null?"ไม่ทราบ":fmt(r.lead_time_days)+" วัน"}</dd>
+          <dt>ขั้นต่ำการสั่ง (MOQ)</dt><dd>${r.minimum_order_qty==null?"ไม่ทราบ":fmt(r.minimum_order_qty)+" ชิ้น"}</dd>
+        </dl>
+      </div>
+      <div class="sec">
+        <h3>ค่าประมาณจากระบบ <span class="tag t-est">ไม่ใช่ข้อเท็จจริง</span></h3>
+        <dl>
+          <dt>ยอดขาย 30 วันย้อนหลัง</dt><dd>${fmt(r.sales_30d_qty)} ชิ้น</dd>
+          <dt>ยอดขายเฉลี่ยต่อวัน</dt><dd>${fmt(r.daily_sales_rate,2)} ชิ้น</dd>
+          <dt>สต็อกพอขาย (Days of Cover)</dt><dd>${review||r.days_of_cover==null?"–":fmt(r.days_of_cover,1)+" วัน"}</dd>
+          <dt>จำนวนที่แนะนำให้ขอสั่ง</dt><dd>${review?"–":fmt(r.suggested_qty)+" ชิ้น"}</dd>
+        </dl>
+        <div class="formula">Days of Cover = สต็อก ÷ ยอดขายเฉลี่ย/วัน · เสี่ยงสูงเมื่อน้อยกว่า Lead Time · เสี่ยงปานกลางเมื่อเกิน Lead Time ไม่เกิน 7 วัน<br>จำนวนแนะนำ = ยอดขาย/วัน × (Lead Time + 14 วันสำรอง) − สต็อก ปัดขึ้นเป็นเท่าของ MOQ</div>
+      </div>
+      <div class="sec">
+        <h3>สร้างร่างคำขอสั่งซื้อ</h3>
+        ${canDraft ? `<div class="row" style="margin-top:8px">
+          <label class="small" for="dq">จำนวน (ชิ้น)</label>
+          <input class="input qty" id="dq" type="number" min="1" step="1" value="${sug}">
+          <button class="btn" id="mkDraft" data-id="${esc(r.product_id)}">สร้างร่างคำขอ</button>
+        </div><p class="note" style="margin:10px 0 0">เป็นร่างภายในให้หัวหน้าอนุมัติ ยังไม่ใช่ใบสั่งซื้อจริง</p>`
+        : `<p class="note" style="margin:8px 0 0">ยังสร้างร่างไม่ได้ เพราะข้อมูลของสินค้านี้ไม่สมบูรณ์</p>`}
+      </div>
+    </div>`;
+  $("#drawer").classList.add("on"); $("#ov").classList.add("on"); $("#drawer").setAttribute("aria-hidden","false");
+  $("#closeD").focus();
+}
+function closeDrawer(){ $("#drawer").classList.remove("on"); $("#ov").classList.remove("on"); $("#drawer").setAttribute("aria-hidden","true"); }
+
+/* ---------- ร่างคำขอสั่งซื้อ ---------- */
+async function loadRequests(){
+  const reqs = await api("/api/requests");
+  $("#reqCount").textContent = reqs.length;
+  $("#reqEmpty").hidden = reqs.length>0;
+  $("#reqRows").innerHTML = reqs.map(r=>`
+    <tr style="cursor:default" data-req="${esc(r.request_id)}">
+      <td class="sku">${esc(r.request_id)}</td>
+      <td><div class="sku">${esc(r.product_id)}</div><div class="small">${esc(r.product_name)}</div></td>
+      <td><span class="badge b-${esc(r.risk_status)}">${LABEL[r.risk_status]||esc(r.risk_status)}</span></td>
+      <td class="num"><input class="input qty" style="width:90px;text-align:right" type="number" min="1" value="${Number(r.requested_qty)}" data-qty="${esc(r.request_id)}" aria-label="จำนวนของ ${esc(r.request_id)}"></td>
+      <td><span class="badge b-${esc(r.status)}">${r.status==="Draft"?"ร่าง":"อนุมัติแล้ว"}</span></td>
+      <td class="small">${esc(r.updated_at)}</td>
+      <td style="white-space:nowrap;text-align:right">
+        ${r.status==="Draft" ? `<button class="btn sm" data-approve="${esc(r.request_id)}">อนุมัติ</button>` : ""}
+        <button class="btn sm danger" data-del="${esc(r.request_id)}">ลบ</button>
+      </td>
+    </tr>`).join("");
+}
+
+/* ---------- events ---------- */
+document.addEventListener("click", async e=>{
+  const t = e.target;
+  const kpi = t.closest(".kpi"); if(kpi){ state.status = state.status===kpi.dataset.status ? "" : kpi.dataset.status; renderKpis(); renderRows(); return; }
+  const tr = t.closest("#rows tr"); if(tr){ openDrawer(tr.dataset.id); return; }
+  if(t.id==="ov"||t.id==="closeD"){ closeDrawer(); return; }
+  if(t.id==="clear"){ state.status=state.cat=state.q=""; $("#q").value=""; $("#cat").value=""; renderKpis(); renderRows(); return; }
+  if(t.id==="tab-risk"||t.id==="tab-req"){ const risk=t.id==="tab-risk";
+    $("#tab-risk").setAttribute("aria-selected",risk); $("#tab-req").setAttribute("aria-selected",!risk);
+    $("#view-risk").hidden=!risk; $("#view-req").hidden=risk; if(!risk) loadRequests(); return; }
+  try{
+    if(t.id==="mkDraft"){
+      const qty = parseInt($("#dq").value,10);
+      if(!(qty>0)){ toast("กรุณาใส่จำนวนที่มากกว่า 0"); return; }
+      t.disabled = true;
+      const r = await api("/api/requests",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({product_id:t.dataset.id,requested_qty:qty})});
+      closeDrawer(); await loadRequests(); toast(`สร้างร่าง ${r.request_id} แล้ว (สถานะ: ร่าง)`);
+    } else if(t.dataset.approve){
+      await api("/api/requests/"+t.dataset.approve,{method:"PATCH",headers:{"Content-Type":"application/json"},body:JSON.stringify({status:"Approved"})});
+      await loadRequests(); toast("อนุมัติแล้ว");
+    } else if(t.dataset.del){
+      if(!confirm("ซ่อนร่างคำขอนี้? (ข้อมูลยังเก็บไว้ในไฟล์)")) return;
+      await api("/api/requests/"+t.dataset.del,{method:"DELETE"}); await loadRequests(); toast("ซ่อนรายการแล้ว");
+    }
+  }catch(err){ toast(err.message); const b=$("#mkDraft"); if(b) b.disabled=false; }
+});
+document.addEventListener("change", async e=>{
+  const t=e.target;
+  if(t.id==="cat"){ state.cat=t.value; renderRows(); }
+  if(t.dataset.qty){
+    try{ await api("/api/requests/"+t.dataset.qty,{method:"PATCH",headers:{"Content-Type":"application/json"},body:JSON.stringify({requested_qty:parseInt(t.value,10)})}); toast("บันทึกจำนวนแล้ว"); }
+    catch(err){ toast(err.message); loadRequests(); }
+  }
+});
+$("#q").addEventListener("input", e=>{ state.q=e.target.value; renderRows(); });
+document.addEventListener("keydown", e=>{
+  if(e.key==="Escape") closeDrawer();
+  if(e.key==="Enter" && e.target.closest("#rows tr")) openDrawer(e.target.closest("tr").dataset.id);
+});
+load();
+</script>
+</body>
+</html>
