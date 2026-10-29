@@ -259,14 +259,5 @@ python -m pytest tests -q
 
 ---
 
-## 🏷️ 11. Final Checklist ก่อนส่งงาน
+## ลิงค์prototype
 
-- [ ] ไฟล์ชื่อ `README.md` และ `AI_USE.md` (ไม่มีเว้นวรรคก่อน `.md`)
-- [ ] `python -m pytest tests -q` รันผ่านบนเครื่องที่ Clone ใหม่ และบันทึกผลจริงใน `TEST_CASES.md`
-- [ ] ตรวจสอบกรณียอดขายเป็นศูนย์ ข้อมูลยอดขายไม่ครบ จำนวนแนะนำติดลบ และการปัดตาม MOQ
-- [ ] ตรวจสอบว่าคำอธิบาย HTTP status ใน README ตรงกับการตอบกลับจริงของ API
-- [ ] หากยังไม่มี Authentication/Authorization ให้ระบุชัดว่าเป็นข้อจำกัดของต้นแบบ
-- [ ] README คำสั่งรันตรงกับโค้ดจริง (FastAPI + `web/index.html`)
-- [ ] Push `api/`, `web/`, `tests/`, `.vscode/`, `requirements.txt`, `run.bat`, `run.sh` ขึ้น GitHub ครบ
-- [ ] ไม่มี API Key, `.env`, `.venv/` ติดขึ้น Repository
-- [ ] สร้าง Git Tag / Release `v1.0-final`
