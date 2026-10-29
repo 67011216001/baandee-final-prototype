@@ -84,7 +84,7 @@ H3: การแสดงสถานะ HUMAN_REVIEW_NEEDED พร้อมเ�
 
 ---
 
-## 🧮 3. กฎความเสี่ยง สถาปัตยกรรม และ API
+## 🧮 3. สถาปัตยกรรม เหตุผลในการเลือกเครื่องมือ และขอบเขตระบบ (Architecture & System Boundary)
 
 ### 3.1 กฎประเมินความเสี่ยง (ไม่ใช้ AI)
 
@@ -134,7 +134,7 @@ H3: การแสดงสถานะ HUMAN_REVIEW_NEEDED พร้อมเ�
 
 ---
 
-## 📂 4. โครงสร้าง Repository
+## 📂 4. โครงสร้างพื้นที่จัดเก็บ (Repository Structure)
 
 ```
 baandee-final-prototype/
@@ -164,7 +164,7 @@ baandee-final-prototype/
 
 ---
 
-## 🚀 5. วิธีติดตั้งและเริ่มระบบ (VS Code)
+## 🚀 5. วิธีติดตั้งและเริ่มระบบทีละขั้น (Installation & Setup Guide)
 
 ```bash
 # 1. Clone
@@ -192,7 +192,7 @@ python -m pytest tests -q
 
 ---
 
-## 🎬  6. กรณีสาธิตหลักและผลลัพธ์ที่คาดหวัง
+## 🎬  6. กรณีสาธิตหลักและผลลัพธ์ที่คาดหวัง (Main Demo Scenarios)
 
 **กรณีที่ 1: การทำงานสำเร็จตั้งแต่ตรวจสอบความเสี่ยงจนถึงอนุมัติร่างคำขอสั่งซื้อ (End-to-End Success Flow)**
 
@@ -284,5 +284,6 @@ python -m pytest tests -q
 
 ---
 
-## ลิงค์prototype
+## ลิงก์สำหรับทดสอบระบบ (Quick Links)
+
 
