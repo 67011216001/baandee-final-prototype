@@ -319,4 +319,4 @@ AI ถูกใช้เป็นเครื่องมือช่วย **�
 | 🧪 รายงานผลทดสอบ | [TEST_CASES.md](./TEST_CASES.md) |
 | 🤖 รายงานการใช้ AI | [AI_USE.md](./AI_USE.md) |
 | 🛠️ วิธีรันบน VS Code | [docs/VSCODE_SETUP.md](./docs/VSCODE_SETUP.md) |
-| 🌐 เดโมออนไลน์ | *(ใส่ลิงก์ Render / วิดีโอเดโม ที่นี่ ถ้ามี)* |
+| 🌐 เดโมออนไลน์ | *(| [baandee-final-prototype.onrender.com](https://baandee-final-prototype.onrender.com) |)* |
