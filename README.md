@@ -168,7 +168,7 @@ baandee-final-prototype/
 │   ├── conftest.py
 │   └── test_system.py       # ชุดทดสอบอัตโนมัติ 5 กรณี (ใช้ข้อมูลชั่วคราว)
 ├── docs/
-│   └── VSCODE_SETUP.md      # วิธีรันบน VS Code และแก้ปัญหาที่พบบ่อย
+│   └── data_quality_findings.csv  # ผลสำรวจคุณภาพข้อมูลดิบ
 ├── .vscode/                 # launch.json (กด F5 รันเว็บ), settings.json
 ├── run.bat / run.sh         # ทางลัดติดตั้งและรัน
 ├── TEST_CASES.md            # รายงานผลทดสอบฉบับเต็ม
@@ -214,7 +214,6 @@ python -m uvicorn api.main:app --reload
 3. เปิดแท็บ **Ports** แล้วคลิกไอคอนลูกโลกที่พอร์ต **8000**
 
 > ⚠️ ต้องเปิดผ่านเซิร์ฟเวอร์เท่านั้น **ห้ามดับเบิลคลิก `index.html` ตรง ๆ** เพราะหน้าเว็บต้องเรียก `/api/...`
-> ปัญหาที่พบบ่อยดู [`docs/VSCODE_SETUP.md`](./docs/VSCODE_SETUP.md)
 
 ### รันชุดทดสอบ
 
@@ -318,5 +317,4 @@ AI ถูกใช้เป็นเครื่องมือช่วย **�
 | 📁 Repository | [github.com/67011216001/baandee-final-prototype](https://github.com/67011216001/baandee-final-prototype) |
 | 🧪 รายงานผลทดสอบ | [TEST_CASES.md](./TEST_CASES.md) |
 | 🤖 รายงานการใช้ AI | [AI_USE.md](./AI_USE.md) |
-| 🛠️ วิธีรันบน VS Code | [docs/VSCODE_SETUP.md](./docs/VSCODE_SETUP.md) |
 | 🌐 เดโมออนไลน์ | [baandee-final-prototype.onrender.com](https://baandee-final-prototype.onrender.com) |
