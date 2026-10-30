@@ -1,0 +1,5 @@
+﻿source_file,record_id,issue_type,issue_description,action_required
+products.csv,SKU-KT-104,INVALID_SKU_FORMAT,รหัสสินค้า 'SKU-KT-104' ไม่อยู่ในฟอร์แมตมาตรฐาน SKU-XXXX (ชื่อ: Compact Rice Cooker),HUMAN_REVIEW_NEEDED
+products.csv,SKU-BD-220,INVALID_SKU_FORMAT,รหัสสินค้า 'SKU-BD-220' ไม่อยู่ในฟอร์แมตมาตรฐาน SKU-XXXX (ชื่อ: Cooling Cotton Sheet Set),HUMAN_REVIEW_NEEDED
+orders.csv,ORD-250101-1842,OUTDATED_ORDER_DATE,"order_date: '2025-01-01', promised_date: '2025-01-05'",HUMAN_REVIEW_NEEDED
+orders.csv,ORD-260730-2201,MISSING_OR_AMBIGUOUS_DATE,"order_date: '07/08/2026', promised_date: 'nan'",HUMAN_REVIEW_NEEDED
