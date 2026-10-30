@@ -1,6 +1,6 @@
 ﻿test_id,test_name,input,expected,actual,status
-TC-01,Invalid Data Detection and Human Review,Cleaned Inventory and Joined Supplier Data,ตรวจพบรายการ HUMAN_REVIEW_NEEDED อย่างน้อย 2 รายการ,ตรวจพบรายการที่ต้องตรวจสอบโดยมนุษย์ 3 รายการ,PASS
-TC-02,Supplier API Boundary Handling,"Product IDs (1, 9999) + Simulate 503 Flag","ตอบรับครบ 200 OK, 404 Not Found, 503 Service Unavailable","API ตอบรับสถานะ 200, 404 และ 503 ถูกต้องตามเงื่อนไข",PASS
-TC-03,Stock Risk Calculation Engine,Joined Cleaned Data + Lead Times,คำนวณ Days of Cover และจำแนกสถานะความเสี่ยงถูกต้อง,คำนวณและจำแนกความเสี่ยงสำเร็จรวม 80 SKUs,PASS
-TC-04,Storage Engine CRUD (Create & Update),"SKU-0001, Qty: 50, Status: Approved",ออกรหัส REQ-XXXX และปรับสถานะเป็น Approved สำเร็จ,สร้างตั๋ว REQ-0030 (Draft) และอัปเดตสถานะเป็น Approved สำเร็จ,PASS
-TC-05,Storage Engine Soft Delete,Soft Delete Request ID: REQ-0030,ซ่อนรายการออกจาก UI โดยไม่ลบแถวออกจากไฟล์ CSV,Soft Delete ตั๋ว REQ-0030 สำเร็จ (ซ่อนจาก UI แต่เก็บประวัติไว้ใน CSV),PASS
+TC-01,Invalid Data Detection and Human Review,ข้อมูลสินค้า สต็อก และ Supplier Lead Time,พบข้อมูลที่ต้องตรวจสอบอย่างน้อย 2 รายการ และทุกรายการมีเหตุผลประกอบ,ประมวลผล 82 SKUs; ต้องตรวจสอบ 5 รายการ; มีเหตุผลประกอบ 5 รายการ,PASS
+TC-02,Supplier API Boundary Handling,"Valid SKU, missing SKU, unavailable supplier data","API ให้ผลลัพธ์ 200, 404 และ 503 ตามเงื่อนไข","HTTP status: 200=200, 404=404, 503=503",PASS
+TC-03,Stock Risk Calculation Engine,Cleaned and joined datasets,คำนวณความเสี่ยงและพบ CRITICAL_RISK รวมถึง HUMAN_REVIEW_NEEDED,ประมวลผล 82 SKUs; CRITICAL_RISK=True; HUMAN_REVIEW_NEEDED=True,PASS
+TC-04,Reorder Request Create and Update,"SKU-0001, quantity=50",สร้างคำขอเป็น Draft แล้วอัปเดตเป็น Approved ได้,request_id=REQ-0001; created_as_Draft=True; update_success=True; approved=True,PASS
+TC-05,Soft Delete and Audit Trail,Request ID: REQ-0001,ซ่อนคำขอจากรายการปกติ แต่เก็บประวัติและตั้ง is_deleted=True,delete_success=True; hidden_from_active=True; retained_in_history=True; is_deleted=True,PASS
